@@ -14,10 +14,10 @@ FLASH_FREQ=38.8 #MHz
 all: $(PROJ).prog
 
 %.json: %.v rs232out.v rs232in.v
-	yosys -p "synth_ecp5 -json $@" $^
+	yosys -p "synth_ecp5 -json $@" $^ > yosys.out
 
 %_out.config: %.json
-	nextpnr-ecp5 --json $< --lpf $(CONSTR) --textcfg $@ --85k --package CSFBGA285 --speed 6
+	nextpnr-ecp5 --json $< --lpf $(CONSTR) --textcfg $@ --85k --package CSFBGA285 --speed 6 2> nextpnr-ecp5.out
 
 %.bit: %_out.config
 	ecppack --svf-rowsize 100000  --spimode $(FLASH_MODE) --freq $(FLASH_FREQ) \
