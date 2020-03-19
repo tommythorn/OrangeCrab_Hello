@@ -36,3 +36,5 @@ clean:
 .PHONY: prog clean
 .PRECIOUS: ${PROJ}.json ${PROJ}_out.config
 
+start_console:
+	screen /dev/ttyUSB0 115200
